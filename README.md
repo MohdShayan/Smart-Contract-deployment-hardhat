@@ -1,5 +1,4 @@
-````markdown
-# Story-Hardhat — Build & Deploy
+# Story-Hardhat - Build & Deploy
 
 This repository is a small Hardhat project containing an `Example` contract, a deploy script at `scripts/deploy.js`, and test scaffolding.
 
@@ -33,21 +32,18 @@ Compile contracts (this creates `artifacts/` and `cache/`):
 ```powershell
 npx hardhat compile
 ```
+## Deploy contract (your provided script)
 
-## Run tests
-
-Run unit tests on the Hardhat in-memory network:
-
-```powershell
-npx hardhat test
-```
-
-Run tests with gas reporting (if configured):
+The repository includes `scripts/deploy.js`. Use Hardhat to run it. Replace `<network>` with a network configured in `hardhat.config.js` (for example `localhost`, `goerli`, `mainnet`).
 
 ```powershell
-# PowerShell: set env for this command only
-$env:REPORT_GAS = "true"; npx hardhat test
+# Deploy to a testnet (example: goerli)
+npx hardhat run scripts/deploy.js --network story
+
+# Deploy to the configured local Hardhat network
+npx hardhat run scripts/deploy.js --network localhost
 ```
+
 
 ## Run a local node
 
@@ -59,33 +55,10 @@ npx hardhat node
 
 While `npx hardhat node` runs, you can deploy to it using the `--network localhost` option.
 
-## Deploy contract (your provided script)
-
-The repository includes `scripts/deploy.js`. Use Hardhat to run it. Replace `<network>` with a network configured in `hardhat.config.js` (for example `localhost`, `goerli`, `mainnet`).
-
-```powershell
-# Deploy to the configured local Hardhat network
-npx hardhat run scripts/deploy.js --network localhost
-
-# Deploy to a testnet (example: goerli)
-npx hardhat run scripts/deploy.js --network story
-```
 
 Notes about the deploy script:
 - `scripts/deploy.js` calls `Example.deploy(overrides)` and passes explicit EIP-1559 fields (`maxFeePerGas` and `maxPriorityFeePerGas`). Some RPC providers/networks may ignore these or require `gasPrice` instead.
 - If the contract has constructor arguments, they must be passed before the overrides object: `Example.deploy(arg1, arg2, overrides)`.
-
-## Verify on Etherscan
-
-If you want to verify the contract on Etherscan (requires `@nomiclabs/hardhat-etherscan` plugin and `ETHERSCAN_API_KEY`):
-
-```powershell
-# install plugin (one-time)
-npm install --save-dev @nomiclabs/hardhat-etherscan
-
-# after deployment, verify (replace <address> and any constructor args)
-npx hardhat verify --network goerli <CONTRACT_ADDRESS> "constructorArg1" "constructorArg2"
-```
 
 
 ## Example quick workflow (PowerShell)
